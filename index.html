@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pulse — Customer Churn Prediction Engine</title>
+<meta name="description" content="Pulse monitors account health and flags customers at risk of churning before they flatline." />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="brand-dot"></span> PULSE</div>
+    <nav class="links">
+      <a href="#kpis">Overview</a>
+      <a href="#trends">Trends</a>
+      <a href="#accounts">Accounts</a>
+    </nav>
+    <div class="status-pill"><span>●</span> Model Live</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Churn prediction engine</p>
+      <h1>Every account has a pulse.<br>Some are <em>flatlining</em>.</h1>
+      <p class="lede">Pulse scores every customer against 7 behavioral signals — contract terms, support load, engagement, sentiment — and surfaces who needs attention before the cancellation email arrives.</p>
+      <div class="hero-actions">
+        <a href="#accounts" class="btn primary">View at-risk accounts</a>
+        <a href="#trends" class="btn">See model signals</a>
+      </div>
+      <svg class="ecg-track" viewBox="0 0 700 64" preserveAspectRatio="none" aria-hidden="true">
+        <path id="ecg-path" d="M0,32 L700,32" />
+      </svg>
+    </div>
+    <div class="gauge-card">
+      <div class="gauge-label">Portfolio risk score</div>
+      <div class="gauge-wrap">
+        <svg viewBox="0 0 190 190" width="190" height="190">
+          <circle cx="95" cy="95" r="80" fill="none" stroke="#1b2620" stroke-width="14" />
+          <circle id="gauge-arc" cx="95" cy="95" r="80" fill="none" stroke="#f2b84b" stroke-width="14"
+                  stroke-linecap="round" stroke-dasharray="502" stroke-dashoffset="502"
+                  transform="rotate(-90 95 95)" />
+        </svg>
+        <div class="gauge-value">
+          <span class="num" id="gauge-number">—</span>
+          <span class="unit">AVG RISK / 100</span>
+        </div>
+      </div>
+      <p class="gauge-footnote" id="gauge-footnote">Calculating across portfolio…</p>
+    </div>
+  </div>
+</section>
+
+<section class="kpis" id="kpis">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Portfolio vitals</h2>
+      <p class="desc">A snapshot of account health across the full customer base, updated as new usage and support data arrives.</p>
+    </div>
+    <div class="kpi-grid" id="kpi-grid">
+      <!-- populated by script.js -->
+    </div>
+  </div>
+</section>
+
+<section class="trends" id="trends">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Model signals</h2>
+      <p class="desc">What Pulse is watching, and how the churn rate has moved since the model went into rotation.</p>
+    </div>
+    <div class="chart-grid">
+      <div class="panel">
+        <h3>Monthly churn rate</h3>
+        <p class="sub">Percentage of active accounts lost each month, trailing 12 months</p>
+        <div class="chart-holder"><canvas id="trendChart"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3>Feature importance</h3>
+        <p class="sub">Relative weight each signal carries in the risk score</p>
+        <div class="chart-holder"><canvas id="importanceChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="accounts" id="accounts">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Accounts</h2>
+      <p class="desc">Click any row for a breakdown of the signals driving that customer's score.</p>
+    </div>
+
+    <div class="accounts-toolbar">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search by name or account ID…" />
+      <div class="filter-group" id="filterGroup">
+        <button class="filter-chip" data-band="all" data-active="true">All</button>
+        <button class="filter-chip" data-band="stable" style="--chip-color:#57e2a0">Stable</button>
+        <button class="filter-chip" data-band="elevated" style="--chip-color:#f2b84b">Elevated</button>
+        <button class="filter-chip" data-band="critical" style="--chip-color:#ff6a5c">Critical</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-sort="name">Customer</th>
+            <th data-sort="plan">Plan</th>
+            <th data-sort="tenure_months">Tenure</th>
+            <th data-sort="support_calls_90d">Support calls</th>
+            <th data-sort="churn_risk_score">Risk score</th>
+            <th>Rhythm</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- populated by script.js -->
+        </tbody>
+      </table>
+    </div>
+    <p class="results-count" id="resultsCount"></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>Pulse — customer churn prediction engine. Demo data, synthetically generated.</span>
+    <span><a href="README.md">Documentation</a> · <a href="LICENSE">MIT License</a></span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
